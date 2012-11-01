@@ -21,6 +21,8 @@ abstract class Abstract_Api implements Api_Interface
      */
     protected $client;
 
+    protected $limit = 500;
+
     /**
      * @param Client $client
      */
