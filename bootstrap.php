@@ -15,9 +15,7 @@
 Autoloader::add_core_namespace('Openair');
 
 Autoloader::add_classes(array(
-	'Openair\\Openair'              => __DIR__.'/classes/openair.php',
-
-    'Openair\\Client'               => __DIR__.'/classes/client.php',
+	'Openair\\Client'               => __DIR__.'/classes/client.php',
 
     'Openair\\Error'               => __DIR__.'/classes/error.php',
 
