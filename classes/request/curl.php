@@ -38,9 +38,7 @@ class Request_Curl extends \Fuel\Core\Request_Curl
 					}
 					else
 					{
-                        $xml = self::to_xml( $input );
-                        return $xml;
-						//return \Format::forge($input)->to_xml();
+						return self::to_xml( $input );
 					}
 				break;
 
