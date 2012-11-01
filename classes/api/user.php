@@ -29,12 +29,13 @@ class User extends Abstract_Api
 
         if ( isset( $result['Whoami'] ) && !empty( $result['Whoami'] ) ){
             $return = array(
-                        'data'      => $result['Whoami'],
+                        'data'      => $result['Whoami']['User'],
                         'status'    => array(
                                         'code' => $result['Whoami']['@attributes']['status'],
                                         'message' => Openair\Error::get_error( $result['Whoami']['@attributes']['status'] )
                                         )
                         );
+            return $return;
         } else {
             return false;
         }
