@@ -2,6 +2,8 @@
 
 namespace Openair\Api;
 
+use Openair;
+
 use Fuel\Core\Request;
 use Fuel\Core\Request_Curl;
 
@@ -22,48 +24,37 @@ abstract class Abstract_Api implements Api_Interface
     /**
      * @param Client $client
      */
-    public function __construct(Client $client)
+    public function __construct( Openair\Client $client )
     {
         $this->client = $client;
     }
 
+
+    protected function set_node( $node, $params, $attributes = array())
+    {
+        $this->client->set_node( $node, $params, $attributes );
+    }
+
+
     /**
      * {@inheritDoc}
      */
-    protected function get($path, array $parameters = array(), $requestOptions = array())
+    protected function post( array $parameters = array(), $requestOptions = array())
     {
-        return $this->client->get($path, $parameters, $requestOptions);
+        return $this->client->post( $parameters, $requestOptions);
     }
 
     /**
      * {@inheritDoc}
      */
-    protected function post($path, array $parameters = array(), $requestOptions = array())
+    protected function put( array $parameters = array(), $requestOptions = array())
     {
-        return $this->client->post($path, $parameters, $requestOptions);
+        return $this->client->put( $parameters, $requestOptions);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function patch($path, array $parameters = array(), $requestOptions = array())
+    protected function get_openair_status_code( )
     {
-        return $this->client->patch($path, $parameters, $requestOptions);
+        return $this->client->get_openair_status_code();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function put($path, array $parameters = array(), $requestOptions = array())
-    {
-        return $this->client->put($path, $parameters, $requestOptions);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function delete($path, array $parameters = array(), $requestOptions = array())
-    {
-        return $this->client->delete($path, $parameters, $requestOptions);
-    }
 }

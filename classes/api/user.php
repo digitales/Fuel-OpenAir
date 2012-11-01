@@ -1,21 +1,42 @@
 <?php
-
 namespace Openair\Api;
 
+use Openair;
 /**
  * Searching users, getting user information
  *
  */
-class User extends AbstractApi
+class User extends Abstract_Api
 {
+
     /**
-     * Search users by username:
-     * 
-     * @param  string $keyword the keyword to search
-     * @return array list of users found
+     * Authentication a retrieve details on the authenticated user.
+     *
+     * @param string $username || null
+     * @param string $password || null
+     * @param string $company || null
+     * @return array user details.
      */
-    public function find($keyword)
+    public function whoami( $username = null, $password = null, $company = null )
     {
-        return $this->get('legacy/user/search/'.urlencode($keyword));
+        if ( ! $username ){ $username = $this->client->get_username(); }
+        if ( ! $password ){ $password = $this->client->get_password(); }
+        if ( ! $company ){  $company = $this->client->get_company();   }
+
+        $this->set_node( 'Whoami', array( 'Login' => array( 'user' => $username, 'password' => $password, 'company' => $company ) ) );
+
+        $result = $this->post( array(), array( 'include_headers' => true ) );
+
+        if ( isset( $result['Whoami'] ) && !empty( $result['Whoami'] ) ){
+            $return = array(
+                        'data'      => $result['Whoami'],
+                        'status'    => array(
+                                        'code' => $result['Whoami']['@attributes']['status'],
+                                        'message' => Openair\Error::get_error( $result['Whoami']['@attributes']['status'] )
+                                        )
+                        );
+        } else {
+            return false;
+        }
     }
 }
