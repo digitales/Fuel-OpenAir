@@ -1,16 +1,16 @@
 <?php
 
-namespace Openair\Api;
+namespace Openair\Api\Project;
 
 /**
  * Searching users, getting user information
  *
  */
-class User extends AbstractApi
+class Task extends AbstractApi
 {
     /**
      * Search users by username:
-     * 
+     *
      * @param  string $keyword the keyword to search
      * @return array list of users found
      */

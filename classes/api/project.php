@@ -6,11 +6,11 @@ namespace Openair\Api;
  * Searching users, getting user information
  *
  */
-class User extends AbstractApi
+class Project extends Abstract_Api
 {
     /**
      * Search users by username:
-     * 
+     *
      * @param  string $keyword the keyword to search
      * @return array list of users found
      */
