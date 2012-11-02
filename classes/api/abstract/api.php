@@ -14,6 +14,9 @@ use Fuel\Core\Request_Curl;
  */
 abstract class Abstract_Api implements Api_Interface
 {
+
+    protected $_node_name;
+
     /**
      * The client
      *
@@ -57,6 +60,50 @@ abstract class Abstract_Api implements Api_Interface
     protected function get_openair_status_code( )
     {
         return $this->client->get_openair_status_code();
+    }
+
+
+    protected function set_node_name( $node_name )
+    {
+        $this->_node_name = $node_name;
+        return $this;
+    }
+
+    protected function get_node_name( )
+    {
+        return $this->_node_name;
+    }
+
+
+    /**
+     * Find the item, or list of items from OpenAir
+     *
+     * @param integer $id || null
+     *
+     * @return array
+     */
+    function find( $id = null )
+    {
+        if ( ! $id ){
+            $this->set_node( 'Read', array( $this->_node_name ), array( 'type' => $this->_node_name, 'method' => 'all', 'limit' => $this->limit ) );
+        } else {
+            $this->set_node( 'Read', array( $this->_node_name => array( 'id' => $id ) ), array( 'type' => $this->_node_name, 'method' => 'equal to', 'limit' => $this->limit ) );
+        }
+
+        $result = $this->post( array(), array( 'include_headers' => true ) );
+
+        if ( isset( $result['Read'] ) && !empty( $result['Read'] ) ){
+            $return = array(
+                        'data'      => $result['Read'][ $this->_node_name ],
+                        'status'    => array(
+                                        'code' => $result['Read']['@attributes']['status'],
+                                        'message' => \Openair\Error::get_error( $result['Read']['@attributes']['status'] )
+                                        )
+                        );
+            return $return;
+        } else {
+            return false;
+        }
     }
 
 }

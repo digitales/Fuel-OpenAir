@@ -2,69 +2,46 @@
 
 namespace Openair\Api;
 
-use Openair\Api\Abstract_Api;
+use Openair\Api\Abstract_Api,
+Openair\Api\Project;
 
 
 class Project extends Abstract_Api
 {
+    protected $_node_name = 'Project';
+
+
     /**
-     * Search users by username:
+     * Work with the project tasks
      *
-     * @param  string $keyword the keyword to search
-     * @return array list of users found
+     * @param void
+     * @return Openair\Api\Project\Task
      */
-    public function find($keyword)
+    public function task()
     {
-        return $this->get('legacy/user/search/'.urlencode($keyword));
+        return new Project\Task( $this->client );
     }
 
-    public function get_list( ){
-
-        $this->set_node( 'Read', array( 'Project' ), array( 'type' => 'Project', 'method' => 'all', 'limit' => $this->limit ) );
-        $result = $this->post( array(), array( 'include_headers' => true ) );
-
-
-        if ( isset( $result['Read'] ) && !empty( $result['Read'] ) ){
-            $return = array(
-                        'data'      => $result['Read']['Project'],
-                        'status'    => array(
-                                        'code' => $result['Read']['@attributes']['status'],
-                                        'message' => \Openair\Error::get_error( $result['Read']['@attributes']['status'] )
-                                        )
-                        );
-            return $return;
-        } else {
-            return false;
-        }
-
-
-
+    /**
+     * Work with the project stages
+     *
+     * @param void
+     * @return Openair\Api\Project\Stage
+     */
+    public function stage()
+    {
+        return new Project\Stage( $this->client );
     }
 
-
-    public function get( $id = null ){
-
-        if ( ! $id )
-        {
-            return false;
-        }
-
-        $this->set_node( 'Read', array( 'Project' => array( 'id' => $id ) ), array( 'type' => 'Project', 'method' => 'equal to', 'limit' => $this->limit ) );
-
-        $result = $this->post( array(), array( 'include_headers' => true ) );
-
-        if ( isset( $result['Read'] ) && !empty( $result['Read'] ) ){
-            $return = array(
-                        'data'      => $result['Read']['Project'],
-                        'status'    => array(
-                                        'code' => $result['Read']['@attributes']['status'],
-                                        'message' => \Openair\Error::get_error( $result['Read']['@attributes']['status'] )
-                                        )
-                        );
-            return $return;
-        } else {
-            return false;
-        }
+    /**
+     * Work with the project task types
+     *
+     * @param void
+     * @return Openair\Api\Project\Task\Type
+     */
+    public function task_type()
+    {
+        return new Project\Task\Type( $this->client );
     }
 
 }
