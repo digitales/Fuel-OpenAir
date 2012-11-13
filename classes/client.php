@@ -5,7 +5,8 @@ namespace Openair;
 use Openair\Api,
     Openair\Api\Api_Interface,
     Openair\Request,
-    Openair\Request_Curl;
+    Openair\Request_Curl,
+    Openair\Exception_Argument_Invalid;
 
 
 /**
@@ -168,6 +169,15 @@ class Client
         if ( $attributes ){
             $this->payload[ $node ]['attr'] = $attributes;
         }
+
+        return $this;
+    }
+
+
+    public function unset_node( $node )
+    {
+
+        unset( $this->payload[ $node ] );
 
         return $this;
     }
@@ -396,10 +406,17 @@ class Client
                 case 'customer':
                     $api = new Api\Customer( $this );
                     break;
+                case 'error':
+                    $api = new Api\Error( $this );
+                    break;
                 case 'project':
                     $api = new Api\Project( $this );
                     break;
 
+                case 'report':
+                case 'reports':
+                    $api = new Api\Report( $this );
+                    break;
                 case 'schedule_request':
                 case 'schedule-request':
                 case 'schedulerequest':
