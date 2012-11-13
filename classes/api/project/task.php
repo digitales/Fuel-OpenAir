@@ -9,7 +9,6 @@ class Task extends Abstract_Api
 {
     protected $_node_name = 'Projecttask';
 
-
     function find_for_project( $id = null )
     {
 

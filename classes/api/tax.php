@@ -2,20 +2,21 @@
 
 namespace Openair\Api;
 
-/**
- * Searching users, getting user information
- *
- */
-class User extends AbstractApi
+
+use Openair\Api\Abstract_Api;
+
+
+class Tax extends Abstract_Api
 {
-    /**
-     * Search users by username:
-     * 
-     * @param  string $keyword the keyword to search
-     * @return array list of users found
-     */
-    public function find($keyword)
+
+    public function location()
     {
-        return $this->get('legacy/user/search/'.urlencode($keyword));
+        return new Tax\Location( $this->client );
     }
+
+    public function rate()
+    {
+        return new Tax\Rate( $this->client );
+    }
+    
 }

@@ -1,21 +1,13 @@
 <?php
 
-namespace Openair\Api;
+namespace Openair\Api\Schedule_Request;
 
-/**
- * Searching users, getting user information
- *
- */
-class User extends AbstractApi
+use Openair\Api\Abstract_Api;
+
+
+class Item extends Abstract_Api
 {
-    /**
-     * Search users by username:
-     * 
-     * @param  string $keyword the keyword to search
-     * @return array list of users found
-     */
-    public function find($keyword)
-    {
-        return $this->get('legacy/user/search/'.urlencode($keyword));
-    }
+    protected $_node_name = 'Schedulerequest_item';
+
+
 }
