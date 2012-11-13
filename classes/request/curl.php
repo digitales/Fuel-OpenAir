@@ -132,7 +132,7 @@ class Request_Curl extends \Fuel\Core\Request_Curl
                 } else {
                     $node = $structure;
 
-                    if ( isset( $basenode ) && !empty( $basenode ) && (string)$key !== (string)$basenode ){
+                    if ( isset( $basenode ) && !empty( $basenode ) && ( $basenode == 'Report' || (string)$key !== (string)$basenode )  ){
                         $node = $structure->addChild($key);
                     }
                 }
