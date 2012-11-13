@@ -40,6 +40,11 @@ abstract class Abstract_Api implements Api_Interface
         $this->client->set_node( $node, $params, $attributes );
     }
 
+    protected function unset_node( $node )
+    {
+        $this->client->unset_node( $node );
+    }
+
 
     /**
      * {@inheritDoc}
